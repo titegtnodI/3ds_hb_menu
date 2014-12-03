@@ -151,8 +151,9 @@ int main()
 	initErrors();
 	initMenu(&menu);
 
-	u32 sdmcPrevious = 0;
+	u8 sdmcPrevious = 0;
 	FSUSER_IsSdmcDetected(NULL, &sdmcCurrent);
+	sdmcCurrent = (u8)sdmcCurrent;
 	if(sdmcCurrent == 1)
 	{
 		scanHomebrewDirectory(&menu, "/3ds/");
@@ -169,6 +170,7 @@ int main()
 		if (nextSdCheck < osGetTime())
 		{
 			FSUSER_IsSdmcDetected(NULL, &sdmcCurrent);
+			sdmcCurrent = (u8)sdmcCurrent;
 
 			if(sdmcCurrent == 1 && (sdmcPrevious == 0 || sdmcPrevious < 0))
 			{
@@ -218,6 +220,10 @@ int main()
 			{
 				netloader_activate();
 				netloader_active = true;
+			}else if(hidKeysDown()&KEY_R)
+			{
+				fsExit();
+			    fsInit();
 			}
 			if(secretCode())brewMode = true;
 			else if(updateMenu(&menu))break;
