@@ -220,10 +220,6 @@ int main()
 			{
 				netloader_activate();
 				netloader_active = true;
-			}else if(hidKeysDown()&KEY_R)
-			{
-				fsExit();
-			    fsInit();
 			}
 			if(secretCode())brewMode = true;
 			else if(updateMenu(&menu))break;
